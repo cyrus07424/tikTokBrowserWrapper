@@ -1,8 +1,13 @@
 package jp.cyrus.tikTokBrowserWrapper;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import jp.cyrus.tikTokBrowserWrapper.models.JsonPst;
 import jp.cyrus.tikTokBrowserWrapper.models.JsonUsrInfo;
 import jp.cyrus.tikTokBrowserWrapper.utils.HttpClientHelper;
+import jp.cyrus.tikTokBrowserWrapper.utils.LogHelper;
 
 /**
  * TikTokBrowserWrapper.
@@ -58,6 +63,29 @@ public abstract class TikTokBrowserWrapper {
 		String url = String.format("https://tiktokapi.ga/php/jsonlikes.php?uid=%d&cursor=%d&mode=%d", userId, cursor,
 				mode);
 		String referer = getUserPostsUrl(userId);
+		return HttpClientHelper.getHttpResponse(url, referer, JsonPst.class);
+	}
+
+	/**
+	 * Get JsonHashPst.
+	 *
+	 * @param challengeId
+	 * @param hashname
+	 * @param cursor
+	 * @param mode
+	 * @return
+	 */
+	public static JsonPst getJsonHashPst(long challengeId, String hashname, long cursor, int mode) {
+		String url = String.format("https://tiktokapi.ga/php/jsonhashpst.php?cid=%d&cursor=%d&mode=%d",
+				challengeId, cursor, mode);
+		String referer;
+		try {
+			referer = String.format("https://tiktokapi.ga/user_hashtag.php?cid=%d&hasname=%s",
+					challengeId, URLEncoder.encode(hashname, StandardCharsets.UTF_8.name()));
+		} catch (UnsupportedEncodingException e) {
+			LogHelper.error(e.getMessage());
+			referer = String.format("https://tiktokapi.ga/user_hashtag.php?cid=%d", challengeId);
+		}
 		return HttpClientHelper.getHttpResponse(url, referer, JsonPst.class);
 	}
 
