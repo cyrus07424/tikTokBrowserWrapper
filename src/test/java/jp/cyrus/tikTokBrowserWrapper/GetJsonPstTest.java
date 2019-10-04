@@ -16,13 +16,23 @@ public class GetJsonPstTest {
 	private static final long USER_ID = 6685132210997167106L;
 
 	/**
+	 * PHPSESSID.
+	 */
+	private static final String PHPSESSID = "CHANGEME";
+
+	/**
+	 * ses.
+	 */
+	private static final String SES = "CHANGEME";
+
+	/**
 	 * main.
 	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// Get JsonPst data
-		JsonPst jsonPst = TikTokBrowserWrapper.getJsonPst(USER_ID);
+		JsonPst jsonPst = new TikTokBrowserWrapper(PHPSESSID, SES).getJsonPst(USER_ID);
 		System.out.println(jsonPst);
 
 		for (Aweme aweme : jsonPst.awemeList) {

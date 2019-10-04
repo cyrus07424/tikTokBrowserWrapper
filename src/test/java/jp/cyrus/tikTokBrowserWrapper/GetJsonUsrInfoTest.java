@@ -12,7 +12,17 @@ public class GetJsonUsrInfoTest {
 	/**
 	 * User ID.
 	 */
-	private static final long USER_ID = 6685132210997167106L;
+	private static final long USER_ID = 115974592602513408L;
+
+	/**
+	 * PHPSESSID.
+	 */
+	private static final String PHPSESSID = "CHANGEME";
+
+	/**
+	 * ses.
+	 */
+	private static final String SES = "CHANGEME";
 
 	/**
 	 * main.
@@ -21,7 +31,7 @@ public class GetJsonUsrInfoTest {
 	 */
 	public static void main(String[] args) {
 		// Get JsonUsrInfo data
-		JsonUsrInfo jsonUsrInfo = TikTokBrowserWrapper.getJsonUsrInfo(USER_ID);
+		JsonUsrInfo jsonUsrInfo = new TikTokBrowserWrapper(PHPSESSID, SES).getJsonUsrInfo(USER_ID);
 		System.out.println(jsonUsrInfo);
 	}
 }
